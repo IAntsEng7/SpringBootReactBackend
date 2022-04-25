@@ -25,32 +25,35 @@ public class EmployeeController {
 
   // get all employee
   @GetMapping("/employees")
-  public List<Employee> getAllEmployee(){
+  public List<Employee> getAllEmployee() {
     return employeeRepo.findAll();
   }
 
   // create employee rest pai
   @PostMapping("/employees")
-  public Employee createEmployee(@RequestBody Employee employee){
+  public Employee createEmployee(@RequestBody Employee employee) {
     return employeeRepo.save(employee);
   }
 
   // get employee bu id rest api
   @GetMapping("/employees/{id}")
-  public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
-    Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id : "+ id));
+  public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+    Employee employee = employeeRepo.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id : " + id));
     return ResponseEntity.ok(employee);
   }
 
   // update employee rest api
   @PutMapping("/employees/{id}")
-  public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails){
-    Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id : "+ id));
+  public ResponseEntity<Employee> updateEmployee(@PathVariable Long id,
+      @RequestBody Employee employeeDetails) {
+    Employee employee = employeeRepo.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id : " + id));
 
     employee.setFirstName(employeeDetails.getFirstName());
     employee.setLastName(employeeDetails.getFirstName());
     employee.setEmailId(employeeDetails.getEmailId());
-    Employee updateEmployee =  employeeRepo.save(employee);
+    Employee updateEmployee = employeeRepo.save(employee);
 
     return ResponseEntity.ok(updateEmployee);
   }
